@@ -9,6 +9,10 @@ from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
 from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import accuracy_score, f1_score, roc_auc_score
+
+# Bypass MLflow v3 file store restriction
+os.environ["MLFLOW_ALLOW_FILE_STORE"] = "true"
+
 import mlflow
 import mlflow.sklearn
 
@@ -56,9 +60,11 @@ def train_model():
             mlflow.log_metrics({"accuracy": acc, "f1_score": f1, "roc_auc": roc_auc})
             mlflow.sklearn.log_model(best_pipeline, artifact_path="model")
             
+            print(f"{model_name} F1: {f1:.4f}")
             if f1 > best_overall_score:
                 best_overall_score, best_overall_pipeline, best_algo_name = f1, best_pipeline, model_name
 
+    print(f"Winner: {best_algo_name}")
     os.makedirs("tourism_project/deployment", exist_ok=True)
     joblib.dump(best_overall_pipeline, "tourism_project/deployment/best_model.joblib")
 
