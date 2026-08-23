@@ -6,38 +6,75 @@ jobs:
   register-dataset:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with: { python-version: "3.11" }
-      - run: pip install pandas numpy
-      - run: python tourism_project/model_building/data_register.py
-      - uses: actions/upload-artifact@v4
-        with: { name: registered-data, path: tourism_project/data/tourism.csv }
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with: 
+          python-version: "3.11"
+          
+      - name: Install Dependencies
+        run: pip install pandas numpy
+        
+      - name: Validate Dataset Schema
+        run: python tourism_project/model_building/data_register.py
+        
+      - name: Upload Dataset Artifact
+        uses: actions/upload-artifact@v4
+        with: 
+          name: registered-data 
+          path: tourism_project/data/tourism.csv
 
   data-prep:
     needs: register-dataset
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with: { python-version: "3.11" }
-      - run: pip install -r tourism_project/requirements.txt
-      - run: python tourism_project/model_building/prep.py
-      - uses: actions/upload-artifact@v4
-        with: { name: data-splits, path: "*.csv" }
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with: 
+          python-version: "3.11"
+          
+      - name: Install Dependencies
+        run: pip install pandas scikit-learn
+        
+      - name: Run Data Preparation
+        run: python tourism_project/model_building/prep.py
+        
+      - name: Upload Data Splits Artifact
+        uses: actions/upload-artifact@v4
+        with: 
+          name: data-splits 
+          path: "*.csv"
 
   model-training:
     needs: data-prep
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with: { python-version: "3.11" }
-      - run: pip install -r tourism_project/requirements.txt
-      - uses: actions/download-artifact@v4
-        with: { name: data-splits }
-      - run: python tourism_project/model_building/train.py
-      - run: |
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with: 
+          python-version: "3.11"
+          
+      - name: Install ML and MLOps Dependencies
+        run: pip install pandas scikit-learn xgboost mlflow joblib
+        
+      - name: Download Data Splits Artifact
+        uses: actions/download-artifact@v4
+        with: 
+          name: data-splits
+          
+      - name: Run Model Training & Comparison
+        run: python tourism_project/model_building/train.py
+        
+      - name: Commit and Push Best Model
+        run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add tourism_project/deployment/best_model.joblib
