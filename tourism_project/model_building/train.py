@@ -66,8 +66,11 @@ def train_model():
     # 4. Initialize MLflow Experiment Tracking
     # ---------------------------------------------------------
     # Set the local directory to store MLflow run logs and artifacts
-    mlflow.set_tracking_uri("file:./mlruns")
+    tracking_uri = f"file:{os.path.abspath('mlruns')}"
+    mlflow.set_tracking_uri(tracking_uri)
+    #mlflow.set_tracking_uri("file:./mlruns")
     mlflow.set_experiment("wellness_package_prediction")
+
 
     # Variables to track the overall best performing model
     best_overall_score = 0
