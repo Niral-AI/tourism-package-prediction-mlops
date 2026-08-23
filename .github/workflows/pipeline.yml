@@ -27,7 +27,7 @@ jobs:
           path: tourism_project/data/tourism.csv
 
   data-preparation:
-    needs: data-degistration
+    needs: data-registration
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
