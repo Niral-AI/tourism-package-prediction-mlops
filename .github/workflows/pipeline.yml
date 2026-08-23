@@ -3,7 +3,7 @@ on: [push, workflow_dispatch]
 permissions: { contents: write }
 
 jobs:
-  register-dataset:
+  data-registration:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
@@ -26,8 +26,8 @@ jobs:
           name: registered-data 
           path: tourism_project/data/tourism.csv
 
-  data-prep:
-    needs: register-dataset
+  data-preparation:
+    needs: data-degistration
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
@@ -51,7 +51,7 @@ jobs:
           path: "*.csv"
 
   model-training:
-    needs: data-prep
+    needs: data-preparation
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
