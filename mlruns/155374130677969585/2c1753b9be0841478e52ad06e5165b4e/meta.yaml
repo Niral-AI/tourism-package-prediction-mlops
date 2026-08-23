@@ -1,0 +1,14 @@
+artifact_uri: file:///content/mlruns/155374130677969585/2c1753b9be0841478e52ad06e5165b4e/artifacts
+end_time: 1787484804772
+entry_point_name: ''
+experiment_id: '155374130677969585'
+lifecycle_stage: active
+run_id: 2c1753b9be0841478e52ad06e5165b4e
+run_name: RandomForest_tuning
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1787484796820
+status: 3
+tags: []
+user_id: root
