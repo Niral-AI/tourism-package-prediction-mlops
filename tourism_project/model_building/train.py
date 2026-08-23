@@ -58,7 +58,13 @@ def train_model():
             acc, f1, roc_auc = accuracy_score(y_test, y_pred), f1_score(y_test, y_pred), roc_auc_score(y_test, y_pred)
             mlflow.log_params(grid_search.best_params_)
             mlflow.log_metrics({"accuracy": acc, "f1_score": f1, "roc_auc": roc_auc})
-            mlflow.sklearn.log_model(best_pipeline, artifact_path="model")
+            
+            # Explicitly pass skops_trusted_types to prevent numpy serialization blocking
+            mlflow.sklearn.log_model(
+                best_pipeline, 
+                artifact_path="model",
+                skops_trusted_types=["numpy.dtype", "numpy.int64", "numpy.float64"]
+            )
             
             print(f"{model_name} F1: {f1:.4f}")
             if f1 > best_overall_score:
