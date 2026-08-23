@@ -1,8 +1,5 @@
 # 🌴 Tourism Package Purchase Prediction - End-to-End MLOps Pipeline
 
-[![CI/CD Pipeline](https://github.com/Niral-AI/tourism-package-prediction-mlops/actions/workflows/pipeline.yml/badge.svg)](https://github.com/Niral-AI/tourism-package-prediction-mlops/actions/workflows/pipeline.yml)
-[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://tourism-package-prediction-mlops-grqdujydrspwnucsx3ijm5.streamlit.app/)
-
 ## 📌 Business Context
 "Visit with Us," a leading travel company, is introducing a new **Wellness Tourism Package**. To optimize marketing operations and customer engagement, this project implements a scalable, automated Machine Learning pipeline to predict which customers are most likely to purchase the package before a sales pitch is made.
 
